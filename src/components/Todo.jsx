@@ -10,7 +10,7 @@ const Todo = () => {
 
         <div className='flex items-center mt-7 gap-2'>
             <img src={todo_icon} className='w-8'/>
-            <h1 className='text-3xl font-semibold'> Todo list </h1>
+            <h1 className='text-3xl font-semibold'> Notas </h1>
         </div>
 
         {/* ----------- Input ----------- */}
