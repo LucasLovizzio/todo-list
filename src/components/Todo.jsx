@@ -3,6 +3,33 @@ import todo_icon from '../assets/todo_icon.png'
 import TodoItems from './TodoItems'
 
 const Todo = () => {
+
+  const [todoList, setTodoList] = React.useState([]);
+
+  const inputRef = React.useRef();
+
+  const add = () => {
+    const inputText = inputRef.current.value.trim();
+
+    if (inputText === '') {
+      return null;
+    }
+
+    const newTodo = { 
+      id: Date.now(), 
+      text: inputText, 
+      isComplete: false,
+    }
+
+    setTodoList((prev)=> [...prev, newTodo])
+    inputRef.current.value = '';
+  }
+
+  const deleteTodo = (id) => {
+    setTodoList((prevTodos) => {
+      return prevTodos.filter((todo) => todo.id !== id);
+    });
+  }
   return (
     <div className='bg-white place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl'>
         
@@ -16,16 +43,18 @@ const Todo = () => {
         {/* ----------- Input ----------- */}
 
         <div className='flex items-center my-7 bg-stone-200 rounded-full'>
-          <input className='bg-transparent border-0 outline-none flex-1 h-14 pl-6 pr-2 placeholder:text-slate-600' type='text' 
+          <input ref={inputRef} className='bg-transparent border-0 outline-none flex-1 h-14 pl-6 pr-2 placeholder:text-slate-600' type='text' 
           placeholder='Añade una nueva tarea'/>
-          <button className='border-none rounded-full bg-blue-800 w-32 h-14 text-white text-lg font-medium cursor-pointer'> 
+          <button onClick={add} className='border-none rounded-full bg-blue-800 w-32 h-14 text-white text-lg font-medium cursor-pointer'> 
             Añadir </button>
         </div>
 
         {/* ----------- Items ----------- */}
 
         <div>
-          <TodoItems/>
+          {todoList.map((item, index) => {
+            return <TodoItems key={index} text={item.text} id={item.id} isComplete={item.isComplete} deleteTodo={deleteTodo} />
+          })}
         </div>
     </div>
   )
