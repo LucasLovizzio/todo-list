@@ -4,7 +4,7 @@ import TodoItems from './TodoItems'
 
 const Todo = () => {
 
-  const [todoList, setTodoList] = React.useState([]);
+  const [todoList, setTodoList] = React.useState(localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : []);
 
   const inputRef = React.useRef();
 
@@ -43,7 +43,7 @@ const Todo = () => {
   }
 
   useEffect(() => {
-    console.log(todoList);
+    localStorage.setItem("todos", JSON.stringify(todoList));
   }, [todoList]);
 
 
@@ -54,7 +54,7 @@ const Todo = () => {
 
         <div className='flex items-center mt-7 gap-2'>
             <img src={todo_icon} className='w-8'/>
-            <h1 className='text-3xl font-semibold'> Notas </h1>
+            <h1 className='text-3xl font-semibold'> Tareas </h1>
         </div>
 
         {/* ----------- Input ----------- */}
